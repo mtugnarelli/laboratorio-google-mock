@@ -1,4 +1,3 @@
-laboratorio-google-mock
-=======================
+# Laboratorio
 
-Laboratorio Uso de Google C++ Mocking Framework
+## Uso de Google C++ Mocking Framework
