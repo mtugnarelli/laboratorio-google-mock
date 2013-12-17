@@ -3,6 +3,7 @@
 
 #include "adivinanza.h"
 
+
 class SecretosDummy: public Secretos {
 
     public:
@@ -12,11 +13,7 @@ class SecretosDummy: public Secretos {
 class StubSecretos: public Secretos {
 
     public:
-
-        virtual int obtener() {
-
-            return 7;
-        }
+        MOCK_METHOD0(obtener, int());
 };
 
 TEST(AdivinanzaTest, crearAdivinanzaConSecretosNuloLanzaExcepcion) {
@@ -60,6 +57,9 @@ TEST(AdivinanzaTest, arriesgarValorAdivinando) {
 
     /* condición inicial */
     StubSecretos secretos;
+    EXPECT_CALL(secretos, obtener())
+        .WillRepeatedly(testing::Return(7));
+
     Adivinanza adivinanza(&secretos);
 
     /* operación */

@@ -16,7 +16,6 @@ class Adivinanza {
         Adivinanza(Secretos* secretos) {
 
             if (secretos == NULL) {
-
                 throw std::string("Se necesitan secretos para crear una adivinanza");
             }
 
@@ -32,7 +31,6 @@ class Adivinanza {
         bool arriesgar(int valor) {
 
             this->resuelta = (valor == this->secreto);
-
             return this->resuelta;
         }
 };
