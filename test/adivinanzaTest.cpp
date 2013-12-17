@@ -3,7 +3,6 @@
 
 #include "adivinanza.h"
 
-
 class SecretosDummy: public Secretos {
 
     public:
@@ -14,6 +13,12 @@ class StubSecretos: public Secretos {
 
     public:
         MOCK_METHOD0(obtener, int());
+};
+
+class MockObservadorAdivinanza: public ObservadorAdivinanza {
+
+    public:
+        MOCK_METHOD1(respuestaArriesgada, void(int valor));
 };
 
 TEST(AdivinanzaTest, crearAdivinanzaConSecretosNuloLanzaExcepcion) {
@@ -71,3 +76,45 @@ TEST(AdivinanzaTest, arriesgarValorAdivinando) {
     ASSERT_TRUE(resuelta) << "Está resuelta la adivinanza";
 }
 
+TEST(AdivinanzaTest, crearAdivinanzaConsumeUnUnicoSecreto) {
+
+    /* condición inicial */
+    StubSecretos secretos;
+
+    /* expectativas */
+    EXPECT_CALL(secretos, obtener())
+        .Times(1);
+
+    /* operación */
+    Adivinanza adivinanza(&secretos);
+}
+
+TEST(AdivinanzaTest, adivinanzaObservada) {
+
+    /* condición inicial */
+    SecretosDummy secretos;
+    Adivinanza adivinanza(&secretos);
+    ObservadorAdivinanza* observador = NULL;
+
+    /* operacion */
+    adivinanza.observadaPor(observador);
+}
+
+TEST(AdivinanzaTest, adivinanzaObservadaAlArriesgar) {
+
+    /* condición inicial */
+    SecretosDummy secretos;
+    Adivinanza adivinanza(&secretos);
+    MockObservadorAdivinanza observador;
+
+    /* expectativas */
+    EXPECT_CALL(observador, respuestaArriesgada(34));
+    EXPECT_CALL(observador, respuestaArriesgada(14));
+    EXPECT_CALL(observador, respuestaArriesgada(98));
+
+    /* operacion */
+    adivinanza.observadaPor(&observador);
+    adivinanza.arriesgar(34);
+    adivinanza.arriesgar(14);
+    adivinanza.arriesgar(98);
+}

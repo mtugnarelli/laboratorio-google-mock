@@ -5,11 +5,21 @@
 #include <string>
 #include "secretos.h"
 
+class ObservadorAdivinanza {
+
+    public:
+        virtual void respuestaArriesgada(int valor) = 0;
+        virtual ~ObservadorAdivinanza(){
+        }
+};
+
 class Adivinanza {
 
     private:
         int secreto;
         bool resuelta;
+
+        ObservadorAdivinanza* observador;
 
     public:
 
@@ -21,6 +31,7 @@ class Adivinanza {
 
             this->secreto = secretos->obtener();
             this->resuelta = false;
+            this->observador = NULL;
         }
 
         bool estaResuelta() {
@@ -30,8 +41,17 @@ class Adivinanza {
 
         bool arriesgar(int valor) {
 
+            if (this->observador != NULL) {
+                this->observador->respuestaArriesgada(valor);
+            }
+
             this->resuelta = (valor == this->secreto);
             return this->resuelta;
+        }
+
+        void observadaPor(ObservadorAdivinanza* observador) {
+
+            this->observador = observador;
         }
 };
 
