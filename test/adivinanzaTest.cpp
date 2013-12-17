@@ -1,22 +1,18 @@
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
 
 #include "adivinanza.h"
 
 class SecretosDummy: public Secretos {
 
     public:
-        virtual int obtener() {
-            return 0;
-        }
-        virtual ~SecretosDummy() {
-        }
+        MOCK_METHOD0(obtener, int());
 };
 
 TEST(AdivinanzaTest, crearAdivinanzaConSecretosNuloLanzaExcepcion) {
 
     /* condición inicial */
     Secretos* secretos = NULL;
-
 
     /* operación y comprobación */
     ASSERT_ANY_THROW(Adivinanza adivinanza(secretos));
