@@ -5,7 +5,10 @@
 class Secretos {
 
     public:
-        int obtener();
+        virtual int obtener() = 0;
+
+        virtual ~Secretos() {
+        }
 };
 
 

@@ -4,12 +4,19 @@
 
 class SecretosDummy: public Secretos {
 
+    public:
+        virtual int obtener() {
+            return 0;
+        }
+        virtual ~SecretosDummy() {
+        }
 };
 
 TEST(AdivinanzaTest, crearAdivinanzaConSecretosNuloLanzaExcepcion) {
 
     /* condición inicial */
     Secretos* secretos = NULL;
+
 
     /* operación y comprobación */
     ASSERT_ANY_THROW(Adivinanza adivinanza(secretos));
@@ -27,3 +34,4 @@ TEST(AdivinanzaTest, luegoDeSerCreadaNoEstaResuelta) {
     /* comprobación */
     ASSERT_FALSE(resuelta) << "Inicialmente la adivinanza no está resuelta";
 }
+
