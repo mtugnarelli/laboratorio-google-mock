@@ -21,6 +21,11 @@ class Adivinanza {
 
             return false;
         }
+
+        bool arriesgar(int valor) {
+
+            return false;
+        }
 };
 
 
