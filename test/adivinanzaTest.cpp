@@ -12,7 +12,11 @@ class SecretosDummy: public Secretos {
 class StubSecretos: public Secretos {
 
     public:
-        MOCK_METHOD0(obtener, int());
+
+        virtual int obtener() {
+
+            return 7;
+        }
 };
 
 TEST(AdivinanzaTest, crearAdivinanzaConSecretosNuloLanzaExcepcion) {
@@ -45,9 +49,11 @@ TEST(AdivinanzaTest, arriesgarValorSinAdivinar) {
 
     /* operación */
     bool adivino = adivinanza.arriesgar(9);
+    bool resuelta = adivinanza.estaResuelta();
 
     /* comprobación */
     ASSERT_FALSE(adivino) << "Arriesgo pero no adivinó";
+    ASSERT_FALSE(resuelta) << "No está resuelta la adivinanza";
 }
 
 TEST(AdivinanzaTest, arriesgarValorAdivinando) {
@@ -58,7 +64,10 @@ TEST(AdivinanzaTest, arriesgarValorAdivinando) {
 
     /* operación */
     bool adivino = adivinanza.arriesgar(7);
+    bool resuelta = adivinanza.estaResuelta();
 
     /* comprobación */
     ASSERT_TRUE(adivino) << "Arriesgo y adivinó";
+    ASSERT_TRUE(resuelta) << "Está resuelta la adivinanza";
 }
+

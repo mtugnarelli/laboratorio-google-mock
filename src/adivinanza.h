@@ -7,6 +7,10 @@
 
 class Adivinanza {
 
+    private:
+        int secreto;
+        bool resuelta;
+
     public:
 
         Adivinanza(Secretos* secretos) {
@@ -15,16 +19,21 @@ class Adivinanza {
 
                 throw std::string("Se necesitan secretos para crear una adivinanza");
             }
+
+            this->secreto = secretos->obtener();
+            this->resuelta = false;
         }
 
         bool estaResuelta() {
 
-            return false;
+            return this->resuelta;
         }
 
         bool arriesgar(int valor) {
 
-            return false;
+            this->resuelta = (valor == this->secreto);
+
+            return this->resuelta;
         }
 };
 
